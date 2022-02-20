@@ -4,8 +4,8 @@ from api import hf_api
 from misc import (common_func, settings)
 
 # Log config
-logging.basicConfig(filename='importer.log', format='%(asctime)s - %(message)s', level=logging.INFO)
-logging.info('Start script.')
+logging.basicConfig(filename='importer.log', format='%(asctime)s - %(message)s', level=logging.DEBUG)
+logging.debug('Start script.')
 
 # Script arguments config
 arg_parser = argparse.ArgumentParser(description='Batch of args.')
@@ -22,7 +22,7 @@ if __name__ == '__main__':
         # Загруженную базу кладу в переменную, чтобы каждый раз не ходить в файл.
         loaded_data = common_func.load_data_from_xlsx_to_list(args.base_location, number_or_read_rows)
     except FileNotFoundError:
-        logging.info(f'FileNotFoundError error occurred \nNo such file - {args.base_location}.')
+        logging.debug(f'FileNotFoundError error occurred \nNo such file - {args.base_location}.')
         print(f'FileNotFoundError error occurred \nNo such file - {args.base_location}.')
         exit(0)
     try:
@@ -56,16 +56,16 @@ if __name__ == '__main__':
                                                                                       applicant_data["Комментарий"],
                                                                                       file_id))
             print(add_applicant_to_vacancy.add_new_applicant())
-            logging.info(f'Applicant {applicant_data["ФИО"]} is fully processed.')
+            logging.debug(f'Applicant {applicant_data["ФИО"]} is fully processed.')
 
             number_or_read_rows += 1
             common_func.write_progress_file(settings.PROGRESS_FILE, number_or_read_rows)
 
-        logging.info('End script.')
+        logging.debug('End script.')
         # Если скрипт отработал штатно, нужно записать 0 в settings.PROGRESS_FILE
         common_func.write_progress_file(settings.PROGRESS_FILE, 0)
 
     except KeyError:
-        logging.info(f'KeyError error occurred \n {get_account_data.api_get_method()}')
+        logging.debug(f'KeyError error occurred \n {get_account_data.api_get_method()}')
         print(get_account_data.api_get_method())
         exit(0)
