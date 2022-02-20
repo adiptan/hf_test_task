@@ -16,6 +16,11 @@ def get_account_id(account_data, account_name):
 
 
 def normalize_price(appl_money):
+    """
+    Если тип данных не float - нужно получить все цифры из строки и собрать из них число.
+    :param appl_money:
+    :return:
+    """
     if type(appl_money) == float:
         return int(appl_money)
     else:
@@ -23,6 +28,11 @@ def normalize_price(appl_money):
 
 
 def get_applicant_data(appl_data):
+    """
+    Функция собирает обязательные поля которые передаются в body при post-запросе
+    :param appl_data:
+    :return:
+    """
     full_name = appl_data['ФИО'].strip().split(' ')
     body_data = {"first_name": full_name[1],
                  "last_name": full_name[0],
@@ -58,6 +68,14 @@ def get_applicant_vacancy_id(vacancies_data, applicant_vacancy_name):
 
 
 def get_vacancy_data(vacancy_id, vacancy_status_id, comment, file_id):
+    """
+    В функцию приходят данные для загрузки кандидата на вакансию.
+    :param vacancy_id:
+    :param vacancy_status_id:
+    :param comment:
+    :param file_id:
+    :return: dict
+    """
     vacancy_data = {
         "vacancy": vacancy_id,
         "status": vacancy_status_id,
