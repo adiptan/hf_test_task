@@ -23,7 +23,6 @@ if __name__ == '__main__':
         loaded_data = common_func.load_data_from_xlsx_to_list(args.base_location, number_or_read_rows)
     except FileNotFoundError:
         logging.debug(f'FileNotFoundError error occurred \nNo such file - {args.base_location}.')
-        print(f'FileNotFoundError error occurred \nNo such file - {args.base_location}.')
         exit(0)
     try:
         # Данные ниже меняться не будут, по-этому кладу их в переменные, чтобы каждый раз не ходить за ними в API.
@@ -55,7 +54,7 @@ if __name__ == '__main__':
                                                          common_func.get_vacancy_data(vacancy_id, vacancy_status_id,
                                                                                       applicant_data["Комментарий"],
                                                                                       file_id))
-            print(add_applicant_to_vacancy.add_new_applicant())
+
             logging.debug(f'Applicant {applicant_data["ФИО"]} is fully processed.')
 
             number_or_read_rows += 1
@@ -67,5 +66,4 @@ if __name__ == '__main__':
 
     except KeyError:
         logging.debug(f'KeyError error occurred \n {get_account_data.api_get_method()}')
-        print(f'KeyError error occurred \n {get_account_data.api_get_method()}')
         exit(0)
