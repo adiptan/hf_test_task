@@ -4,7 +4,10 @@ from api import hf_api
 from misc import (common_func, settings)
 
 # Log config
-logging.basicConfig(filename='importer.log', format='%(asctime)s - %(message)s', level=logging.DEBUG)
+console_out = logging.StreamHandler()
+file_log = logging.FileHandler(settings.LOG_FILE_NAME)
+logging.basicConfig(handlers=(console_out, file_log), format='%(asctime)s - %(message)s', level=logging.DEBUG)
+
 logging.debug('Start script.')
 
 # Script arguments config
@@ -54,7 +57,7 @@ if __name__ == '__main__':
                                                          common_func.get_vacancy_data(vacancy_id, vacancy_status_id,
                                                                                       applicant_data["Комментарий"],
                                                                                       file_id))
-            print(add_applicant_to_vacancy.add_new_applicant())
+            add_applicant_to_vacancy.add_new_applicant()
             logging.debug(f'Applicant {applicant_data["ФИО"]} is fully processed.')
 
             number_or_read_rows += 1
@@ -66,5 +69,4 @@ if __name__ == '__main__':
 
     except KeyError:
         logging.debug(f'KeyError error occurred \n {get_account_data.api_get_method()}')
-        print(f'KeyError error occurred \n {get_account_data.api_get_method()}')
         exit(0)
