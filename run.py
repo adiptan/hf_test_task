@@ -66,4 +66,5 @@ if __name__ == '__main__':
 
     except KeyError:
         logging.debug(f'KeyError error occurred \n {get_account_data.api_get_method()}')
+        print(f'KeyError error occurred \n {get_account_data.api_get_method()}')
         exit(0)
